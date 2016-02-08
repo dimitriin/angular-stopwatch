@@ -1,0 +1,18 @@
+{
+  "author": "Dmitrii Nasedkin",
+  "name": "angular-stopwatch",
+  "version": "0.0.1",
+  "homepage": "https://github.com/dimitriin/angular-stopwatch",
+  "main": "dist/angular-stopwatch.js",
+  "licenses": {
+    "type": "MIT",
+    "url": "https://github.com/dimitriin/angular-stopwatch/blob/master/LICENSE.txt"
+  },
+  "bugs": "https://github.com/dimitriin/angular-stopwatch/issues",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:dimitriin/angular-stopwatch.git"
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}

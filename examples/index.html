@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Angular stopwatch</title>
+</head>
+<body ng-app="stopwatch-example" ng-controller="StopwatchController">
+    <sapn stopwatch="stopTimestamp"></sapn>
+    <button ng-click="start()" ng-disabled="running">start</button>
+    <button ng-click="stop()" ng-disabled="!running">stop</button>
+    <button ng-click="add(60)" >+1 min</button>
+    <script type="text/javascript" src="../bower_components/angular/angular.min.js"></script>
+    <script type="text/javascript" src="../dist/angular-stopwatch.js"></script>
+    <script type="text/javascript" src="app.js"></script>
+
+</body>
+</html>

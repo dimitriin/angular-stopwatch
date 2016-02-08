@@ -1,0 +1,17 @@
+{
+  "author": "Dmitrii Nasedkin",
+  "name": "angular-stopwatch",
+  "version": "0.0.1",
+  "homepage": "https://github.com/dimitriin/angular-stopwatch",
+  "description": "Angular stopwatch directive",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/dimitriin/angular-stopwatch.git"
+  },
+  "dependencies": {
+    "angular": "1.4.x"
+  },
+  "devDependencies": {
+  },
+  "main": "./dist/angular-stopwatch.js"
+}
