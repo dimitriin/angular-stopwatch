@@ -6,6 +6,7 @@
     angular.module('stopwatch', [])
         .directive('stopwatch', ['$interval', 'dateFilter', function($interval, dateFilter) {
             function link(scope, element, attrs) {
+                var format    = 'mm:ss';
                 var stopwatch = false;
                 var timeoutId = false;
                 var id        = getUniqueId();
@@ -42,9 +43,12 @@
                 function update() {
                     var stopDate = new Date(parseInt(stopwatch));
                     var nowDate  = new Date();
-                    if( nowDate <= stopDate ) {
-                        element.text(dateFilter(stopDate - nowDate, 'mm:ss'));
+                    if( nowDate.getTime() <= stopDate.getTime() ) {
+                        element.text(dateFilter(stopDate - nowDate, format));
                     } else {
+                        scope.$emit('stopwatch-completed', {
+                           stopwatch: id
+                        });
                         stop();
                     }
                 }

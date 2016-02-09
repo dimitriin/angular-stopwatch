@@ -6,7 +6,7 @@
     var app = angular.module('stopwatch-example', ['stopwatch']);
     app.controller('StopwatchController', ['$scope', function ($scope) {
         var now = new Date().getTime();
-        $scope.stopTimestamp = now + 5*60*1000; // +5min
+        $scope.stopTimestamp = now + 60*1000; // 1min
         $scope.running = false;
         $scope.stopwatchId = false;
 
@@ -34,6 +34,11 @@
 
         $scope.$on('stopwatch-stopped', function(event, data){
             $scope.running = false;
+            console.log('stopped', event, data);
+        });
+
+        $scope.$on('stopwatch-completed', function(event, data){
+            console.log('completed', event, data);
         });
     }]);
 
