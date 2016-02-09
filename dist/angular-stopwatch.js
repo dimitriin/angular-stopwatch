@@ -19,9 +19,24 @@
                     return '' + (new Date()).getTime() + Math.random().toString(16).slice(2);
                 }
 
+                function rest() {
+                    if( stopwatch ) {
+                        return stopwatch - (new Date()).getTime();
+                    } else {
+                        return 0;
+                    }
+                }
+
                 function stop() {
                     if( isRunning() ) {
                         $interval.cancel(timeoutId);
+
+                        if( rest() <= 0 ) {
+                            scope.$emit('stopwatch-completed', {
+                                stopwatch: id
+                            });
+                        }
+
                         scope.$emit('stopwatch-stopped', {
                             stopwatch: id
                         });
@@ -31,24 +46,22 @@
 
                 function start() {
                     if( !isRunning() ) {
-                        timeoutId = $interval(function () {
-                            update();
-                        }, 1000);
-                        scope.$emit('stopwatch-started', {
-                            stopwatch: id
-                        });
+                        if( rest() >= 0 ) {
+                            timeoutId = $interval(function () {
+                                update();
+                            }, 1000);
+                            scope.$emit('stopwatch-started', {
+                                stopwatch: id
+                            });
+                        }
                     }
                 }
 
                 function update() {
-                    var stopDate = new Date(parseInt(stopwatch));
-                    var nowDate  = new Date();
-                    if( nowDate.getTime() <= stopDate.getTime() ) {
-                        element.text(dateFilter(stopDate - nowDate, format));
+                    var r = rest();
+                    if( r >= 0 ) {
+                        element.text(dateFilter(new Date(r), format));
                     } else {
-                        scope.$emit('stopwatch-completed', {
-                           stopwatch: id
-                        });
                         stop();
                     }
                 }
