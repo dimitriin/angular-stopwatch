@@ -6,8 +6,9 @@
     angular.module('stopwatch', [])
         .directive('stopwatch', ['$interval', 'dateFilter', function($interval, dateFilter) {
             function link(scope, element, attrs) {
+                var stopwatch = attrs.stopwatch;
+
                 var format    = 'mm:ss';
-                var stopwatch = false;
                 var timeoutId = false;
                 var id        = getUniqueId();
 
@@ -25,6 +26,10 @@
                     } else {
                         return 0;
                     }
+                }
+
+                function updateElement(d) {
+                    element.text(dateFilter(d, format));
                 }
 
                 function stop() {
@@ -46,21 +51,30 @@
 
                 function start() {
                     if( !isRunning() ) {
-                        if( rest() >= 0 ) {
+                        var r = rest();
+                        if( r > 0 ) {
+                            update(r);
+
                             timeoutId = $interval(function () {
                                 update();
                             }, 1000);
+
                             scope.$emit('stopwatch-started', {
                                 stopwatch: id
                             });
+
+                            return true;
+                        } else {
+                            updateElement(new Date(0));
                         }
                     }
+                    return false;
                 }
 
-                function update() {
-                    var r = rest();
+                function update(r) {
+                    r = r || rest();
                     if( r >= 0 ) {
-                        element.text(dateFilter(new Date(r), format));
+                        updateElement(r);
                     } else {
                         stop();
                     }
@@ -68,8 +82,9 @@
 
                 scope.$watch(attrs.stopwatch, function(value) {
                     stopwatch = value;
-                    start();
-                    update();
+                    if( start() ) {
+                        update();
+                    }
                 });
 
                 element.on('$destroy', function() {
